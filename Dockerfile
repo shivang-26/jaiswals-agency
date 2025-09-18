@@ -1,14 +1,15 @@
-# Use official PHP image with Apache
 FROM php:8.2-apache
 
-# Enable common PHP extensions if needed
+# Enable PDO + MySQL
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Copy your code into the container
+# Copy PHP files
 COPY public/ /var/www/html/
 
-# (optional) copy assets outside public if you want
-# COPY assets/ /var/www/html/assets/
+# Copy assets too
+COPY assets/ /var/www/html/assets/
 
-# Expose port 80 (Render maps this automatically)
+# (optional) give Apache write permission if needed
+RUN chown -R www-data:www-data /var/www/html
+
 EXPOSE 80
